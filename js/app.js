@@ -99,6 +99,7 @@ let charSprites = [
 ]
 class Player {
     
+    //set starting position of player
     setStartPosition(){
         
         this.y = endBoundry;
@@ -109,6 +110,8 @@ class Player {
         this.bottom = this.y + 137;
         this.row = 0;
     }
+
+    //reset the player position to start
     reset(){
         this.setStartPosition();
     }
@@ -116,18 +119,24 @@ class Player {
         this.sprite = charSprites[level];
         this.setStartPosition();
     }
+
+    //move player left by xOffset
     moveLeft(){
         if(this.x > startBoundry){
             this.x = this.x - xOffset ;
             this.left = this.x + 17;
         }
     }
+
+    //move player right by xOffset
     moveRight(){
         if(this.x < endBoundry){
             this.x = this.x + xOffset;
             this.right = this.x + 83;
         }
     }
+
+    //move player Down by yOffset
     moveDown(){
         if(this.y < endBoundry){
             this.y = this.y + yOffset;
@@ -137,6 +146,8 @@ class Player {
             }
         }
     }
+
+    //move player up by yOffset
     moveUp(){
         if(this.y > startBoundry){
             this.y = this.y - yOffset;
@@ -146,6 +157,8 @@ class Player {
             }
         }
     }
+
+    // update the player position
     update(){
         this.left = this.x + 17;
         this.right = this.x + 83;
@@ -155,15 +168,19 @@ class Player {
             player.reset();
             if(level<6){
                 level++;
-                this.sprite = charSprites[level];
                 numOfBugs++;
+                player.sprite = charSprites[level];
                 populateBugs();
             }
         }
     }
+
+    //draw the player
     render(){
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     }
+
+    //handle the input
     handleInput(keyCode){
         if(keyCode == 'left'){
             this.moveLeft();
@@ -181,9 +198,11 @@ class Player {
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
-let numOfBugs = 4;
-let level = 0;
-let allEnemies = [];
+
+let numOfBugs = 6; // number of bugs in the game
+let level = 0; // level of the game
+let allEnemies;
+
 function populateBugs(){
     allEnemies=[];
     for(let i=0;i<numOfBugs;i++){

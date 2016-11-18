@@ -11,7 +11,7 @@
 <body class="w3-row">
 	<h1>Welcome to the frogger!<h1>
 	<section class="w3-col s3">
-		<h3>Select Your Character</h3>
+		<h2>Save us from these bugs!</h2>
 		<section class="sprites w3-row">
 			<img class="w3-col s2" src="images/char-boy.png">
 			<img class="w3-col s2" src="images/char-cat-girl.png">
@@ -19,6 +19,7 @@
 			<img class="w3-col s2" src="images/char-pink-girl.png">
 			<img class="w3-col s2" src="images/char-princess-girl.png">
 		</section>
+		<h3 class="level-heading"> </h3>
 	</section>
 	<section class="w3-col s9" id="mycanvas">
 
@@ -27,11 +28,5 @@
     <script src="js/resources.js"></script>
     <script src="js/app.js"></script>
     <script src="js/engine.js"></script>
-    <script type="text/javascript">
-    	$(".sprites").on('click',function(event){
-    		let targetSrc = event.target.getAttribute("src");
-    		player.sprite=targetSrc;
-    	});
-    </script>
 </body>
 </html>
