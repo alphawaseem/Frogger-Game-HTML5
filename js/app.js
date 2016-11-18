@@ -39,7 +39,7 @@ class Enemy {
     }
 
     setSpeed(){
-        this.speed = getRandomInt(25,200);
+        this.speed = getRandomInt(25,350);
     }
     reset(){
         this.setSpeed();
@@ -90,9 +90,17 @@ const yOffset = 82;
 const startBoundry = 1;
 const endBoundry = 401;
 
+let charSprites = [
+    'images/char-boy.png',
+    'images/char-cat-girl.png',
+    'images/char-horn-girl.png',
+    'images/char-pink-girl.png',
+    'images/char-princess-girl.png'
+]
 class Player {
     
     setStartPosition(){
+        
         this.y = endBoundry;
         this.x = startBoundry;
         this.left = this.x + 17;
@@ -101,8 +109,11 @@ class Player {
         this.bottom = this.y + 137;
         this.row = 0;
     }
+    reset(){
+        this.setStartPosition();
+    }
     constructor(){
-        this.sprite = 'images/char-boy.png';
+        this.sprite = charSprites[level];
         this.setStartPosition();
     }
     moveLeft(){
@@ -130,7 +141,7 @@ class Player {
         if(this.y > startBoundry){
             this.y = this.y - yOffset;
             this.top = this.y + 63;
-            if(this.row<5){
+            if(this.row<=5){
                 this.row++;
             }
         }
@@ -140,6 +151,15 @@ class Player {
         this.right = this.x + 83;
         this.top = this.y + 63;
         this.bottom = this.y + 137;
+        if(player.row == 5){
+            player.reset();
+            if(level<6){
+                level++;
+                this.sprite = charSprites[level];
+                numOfBugs++;
+                populateBugs();
+            }
+        }
     }
     render(){
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
@@ -161,7 +181,16 @@ class Player {
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
-let allEnemies = [new Enemy(),new Enemy(), new Enemy(),new Enemy(),new Enemy(),new Enemy(),new Enemy()];
+let numOfBugs = 4;
+let level = 0;
+let allEnemies = [];
+function populateBugs(){
+    allEnemies=[];
+    for(let i=0;i<numOfBugs;i++){
+        allEnemies.push(new Enemy());
+    }
+}
+populateBugs();
 let player = new Player();
 
 
