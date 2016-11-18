@@ -37,12 +37,15 @@ class Enemy {
     setSpeed(){
         this.speed = getRandomInt(25,200);
     }
-    constructor(){
-        this.sprite = 'images/enemy-bug.png';
+    reset(){
         this.setSpeed();
         this.setStartPosition();
     }
-
+    constructor(){
+        this.sprite = 'images/enemy-bug.png';
+        this.reset();
+    }
+   
     // Update the enemy's position, required method for game
     // Parameter: dt, a time delta between ticks
     update(dt) {
@@ -52,8 +55,7 @@ class Enemy {
         if(this.x < 506)
             this.x = this.x + this.speed * dt;
         else {
-            this.setSpeed();
-            this.setStartPosition();
+            this.reset();
         }
 
     }
