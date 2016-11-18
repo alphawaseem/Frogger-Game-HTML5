@@ -99,6 +99,7 @@ class Player {
         this.right = this.x + 83;
         this.top = this.y + 63;
         this.bottom = this.y + 137;
+        this.row = 0;
     }
     constructor(){
         this.sprite = 'images/char-boy.png';
@@ -120,12 +121,18 @@ class Player {
         if(this.y < endBoundry){
             this.y = this.y + yOffset;
             this.bottom = this.y+137;
+            if(this.row>0){
+                this.row--;
+            }
         }
     }
     moveUp(){
         if(this.y > startBoundry){
             this.y = this.y - yOffset;
-            this.top = this.top + 63;
+            this.top = this.y + 63;
+            if(this.row<5){
+                this.row++;
+            }
         }
     }
     update(){
