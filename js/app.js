@@ -17,27 +17,30 @@ class Enemy {
 
     // row : num of row b/w 1-3 
     // sets the enemy starting position based upon row number
-    setStartPosition(row){
+    setStartPosition(){
+        this.row = getRandomInt(1,4);
         let x , y ;
-        if(row==1){
-            x = -84;
-            y = 166 ;
-        } else if( row==2) {
-            x = -117;
-            y = 249 ;
+        if(this.row==1){
+            x = -101;
+            y = 60 ;
+        } else if( this.row==2) {
+            x = -101;
+            y = 73*2 ;
         } else {
-            x = - 250;
-            y = 332;
+            x =-101;
+            y = 75*3;
         }
         this.x = x;
         this.y = y;
     }
 
+    setSpeed(){
+        this.speed = getRandomInt(25,200);
+    }
     constructor(){
         this.sprite = 'images/enemy-bug.png';
-        this.speed = getRandomInt(10,80);
-        this.row = getRandomInt(1,4);
-        this.setStartPosition(this.row);
+        this.setSpeed();
+        this.setStartPosition();
     }
 
     // Update the enemy's position, required method for game
@@ -46,6 +49,13 @@ class Enemy {
         // You should multiply any movement by the dt parameter
         // which will ensure the game runs at the same speed for
         // all computers.
+        if(this.x < 506)
+            this.x = this.x + this.speed * dt;
+        else {
+            this.setSpeed();
+            this.setStartPosition();
+        }
+
     }
 
     // Draw the enemy on the screen, required method for game
@@ -59,12 +69,17 @@ class Enemy {
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
-
+class Player {
+    update(){}
+    render(){}
+    handleInput(){}
+}
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
-
+let allEnemies = [new Enemy(),new Enemy(), new Enemy(),new Enemy(),new Enemy(),new Enemy(),new Enemy()];
+let player = new Player();
 
 
 // This listens for key presses and sends the keys to your
