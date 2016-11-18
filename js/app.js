@@ -38,9 +38,12 @@ class Enemy {
         this.bottom = this.y + 141;
     }
 
+    // set the speed of the bugs
     setSpeed(){
         this.speed = getRandomInt(25,350);
     }
+
+    // reset the bug to start position and reset to new speed
     reset(){
         this.setSpeed();
         this.setStartPosition();
@@ -50,6 +53,7 @@ class Enemy {
         this.reset();
     }
    
+   // detect collision using AABB collision method
     catchPlayer(player){
         if(!(this.left>player.right ||
             this.right<player.left||
@@ -81,15 +85,16 @@ class Enemy {
     
 }
 
-
-// Now write your own player class
-// This class requires an update(), render() and
-// a handleInput() method.
-const xOffset = 100;
+// 
+const xOffset = 100; 
 const yOffset = 82;
-const startBoundry = 1;
-const endBoundry = 401;
 
+//start boundary of canvas
+const startBoundary = 1;
+//end boundary of canvas
+const endBoundary = 401;
+
+// set the char sprite based on level
 let charSprites = [
     'images/char-boy.png',
     'images/char-cat-girl.png',
@@ -102,8 +107,8 @@ class Player {
     //set starting position of player
     setStartPosition(){
         
-        this.y = endBoundry;
-        this.x = startBoundry;
+        this.y = endBoundary;
+        this.x = startBoundary;
         this.left = this.x + 17;
         this.right = this.x + 83;
         this.top = this.y + 63;
@@ -122,7 +127,7 @@ class Player {
 
     //move player left by xOffset
     moveLeft(){
-        if(this.x > startBoundry){
+        if(this.x > startBoundary){
             this.x = this.x - xOffset ;
             this.left = this.x + 17;
         }
@@ -130,7 +135,7 @@ class Player {
 
     //move player right by xOffset
     moveRight(){
-        if(this.x < endBoundry){
+        if(this.x < endBoundary){
             this.x = this.x + xOffset;
             this.right = this.x + 83;
         }
@@ -138,7 +143,7 @@ class Player {
 
     //move player Down by yOffset
     moveDown(){
-        if(this.y < endBoundry){
+        if(this.y < endBoundary){
             this.y = this.y + yOffset;
             this.bottom = this.y+137;
             if(this.row>0){
@@ -149,7 +154,7 @@ class Player {
 
     //move player up by yOffset
     moveUp(){
-        if(this.y > startBoundry){
+        if(this.y > startBoundary){
             this.y = this.y - yOffset;
             this.top = this.y + 63;
             if(this.row<=5){
@@ -164,13 +169,13 @@ class Player {
         this.right = this.x + 83;
         this.top = this.y + 63;
         this.bottom = this.y + 137;
-        if(player.row == 5){
-            player.reset();
+        if(player.row == 5){ // reached to water
+            player.reset(); // reset the player position
             if(level<6){
-                level++;
-                numOfBugs++;
-                player.sprite = charSprites[level];
-                populateBugs();
+                level++; // increase the level after reaching to water
+                numOfBugs++;// increase no of bugs
+                player.sprite = charSprites[level]; // set new char sprite
+                populateBugs(); // popuplate bugs
             }
         }
     }
