@@ -71,10 +71,59 @@ class Enemy {
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
+const xOffset = 100;
+const yOffset = 82;
+const startBoundry = 1;
+const endBoundry = 401;
+
 class Player {
-    update(){}
-    render(){}
-    handleInput(){}
+    
+    setStartPosition(){
+        this.y = endBoundry;
+        this.x = startBoundry;
+    }
+    constructor(){
+        this.sprite = 'images/char-boy.png';
+        this.setStartPosition();
+    }
+    moveLeft(){
+        if(this.x > startBoundry){
+            this.x = this.x - xOffset ;
+        }
+    }
+    moveRight(){
+        if(this.x < endBoundry){
+            this.x = this.x + xOffset;
+        }
+    }
+    moveDown(){
+        if(this.y < endBoundry){
+            this.y = this.y + yOffset;
+        }
+    }
+    moveUp(){
+        if(this.y > startBoundry){
+            this.y = this.y - yOffset;
+        }
+    }
+    update(){
+        //chechForCollision();
+    }
+    render(){
+        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    }
+    handleInput(keyCode){
+        if(keyCode == 'left'){
+            this.moveLeft();
+        } else if(keyCode == 'right') {
+            this.moveRight();
+        } else if ( keyCode == 'down') {
+            this.moveDown();
+        } else if (keyCode == 'up'){
+            this.moveUp();
+        }
+    }
+
 }
 
 // Now instantiate your objects.
