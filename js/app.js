@@ -32,6 +32,10 @@ class Enemy {
         }
         this.x = x;
         this.y = y;
+        this.left = this.x + 2;
+        this.right = this.x + 99;
+        this.top = this.y + 79;
+        this.bottom = this.y + 141;
     }
 
     setSpeed(){
@@ -46,18 +50,28 @@ class Enemy {
         this.reset();
     }
    
+    catchPlayer(player){
+        if(!(this.left>player.right ||
+            this.right<player.left||
+            this.top>player.bottom||
+            this.bottom<player.top)){
+            player.setStartPosition();
+        }
+    }
     // Update the enemy's position, required method for game
     // Parameter: dt, a time delta between ticks
     update(dt) {
         // You should multiply any movement by the dt parameter
         // which will ensure the game runs at the same speed for
         // all computers.
-        if(this.x < 506)
+        if(this.x < 506){
             this.x = this.x + this.speed * dt;
+            this.left = this.x + 17;
+            this.right = this.x + 83;
+        }
         else {
             this.reset();
         }
-
     }
 
     // Draw the enemy on the screen, required method for game
@@ -81,6 +95,10 @@ class Player {
     setStartPosition(){
         this.y = endBoundry;
         this.x = startBoundry;
+        this.left = this.x + 17;
+        this.right = this.x + 83;
+        this.top = this.y + 63;
+        this.bottom = this.y + 137;
     }
     constructor(){
         this.sprite = 'images/char-boy.png';
@@ -89,25 +107,32 @@ class Player {
     moveLeft(){
         if(this.x > startBoundry){
             this.x = this.x - xOffset ;
+            this.left = this.x + 17;
         }
     }
     moveRight(){
         if(this.x < endBoundry){
             this.x = this.x + xOffset;
+            this.right = this.x + 83;
         }
     }
     moveDown(){
         if(this.y < endBoundry){
             this.y = this.y + yOffset;
+            this.bottom = this.y+137;
         }
     }
     moveUp(){
         if(this.y > startBoundry){
             this.y = this.y - yOffset;
+            this.top = this.top + 63;
         }
     }
     update(){
-        //chechForCollision();
+        this.left = this.x + 17;
+        this.right = this.x + 83;
+        this.top = this.y + 63;
+        this.bottom = this.y + 137;
     }
     render(){
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
