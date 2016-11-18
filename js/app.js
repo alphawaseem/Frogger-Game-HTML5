@@ -1,12 +1,43 @@
 // Enemies our player must avoid
+
+ //Returns a random integer between min (included) and max (excluded)
+// Using Math.round() will give you a non-uniform distribution!
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min)) + min;
+}
+
 class Enemy {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
 
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
+
+    // row : num of row b/w 1-3 
+    // sets the enemy starting position based upon row number
+    setStartPosition(row){
+        let x , y ;
+        if(row==1){
+            x = -84;
+            y = 166 ;
+        } else if( row==2) {
+            x = -117;
+            y = 249 ;
+        } else {
+            x = - 250;
+            y = 332;
+        }
+        this.x = x;
+        this.y = y;
+    }
+
     constructor(){
         this.sprite = 'images/enemy-bug.png';
+        this.speed = getRandomInt(10,80);
+        this.row = getRandomInt(1,4);
+        this.setStartPosition(this.row);
     }
 
     // Update the enemy's position, required method for game
@@ -24,8 +55,6 @@ class Enemy {
     
 }
 
-
- 
 
 // Now write your own player class
 // This class requires an update(), render() and
