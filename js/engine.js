@@ -83,7 +83,7 @@ var Engine = (function(global) {
         if(level<5)
             $(".level-heading").text(`Level ${level+1}`);
         else
-            $(".level-heading").text('Thank you soo much!!! Now you can go back to your precious work!');
+            $(".level-heading").text('Thank you soo much!!! You saved us!');
         // checkCollisions();
     }
 
