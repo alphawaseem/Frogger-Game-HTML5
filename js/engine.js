@@ -50,6 +50,7 @@ var Engine = (function(global) {
             render();
         } else {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
+            return;
         }
         
 
