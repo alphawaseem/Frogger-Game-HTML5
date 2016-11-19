@@ -198,7 +198,7 @@ class Player {
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
-
+let gameOver = false;
 let numOfBugs = 6; // number of bugs in the game
 let level = 0; // level of the game
 let allEnemies;
@@ -211,8 +211,10 @@ function gotoNextLevel(){
         populateBugs(); // popuplate bugs
         if(level<5)
             $(".level-heading").text(`Level ${level+1}`);
-        else
+        else{
             $(".level-heading").text('Thank you soo much!!! You saved us!');
+            gameOver = true;
+        }
     }
 }
 function populateBugs(){
