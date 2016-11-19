@@ -79,11 +79,7 @@ var Engine = (function(global) {
      * on the entities themselves within your app.js file).
      */
     function update(dt) {
-        updateEntities(dt);
-        if(level<5)
-            $(".level-heading").text(`Level ${level+1}`);
-        else
-            $(".level-heading").text('Thank you soo much!!! You saved us!');
+        updateEntities(dt);   
         // checkCollisions();
     }
 
@@ -165,6 +161,10 @@ var Engine = (function(global) {
      */
     function reset() {
         // noop
+        if(level<5)
+            $(".level-heading").text(`Level ${level+1}`);
+        else
+            $(".level-heading").text('Thank you soo much!!! You saved us!');
     }
 
     /* Go ahead and load all of the images we know we're going to need to

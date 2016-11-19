@@ -209,6 +209,10 @@ function gotoNextLevel(){
         numOfBugs++;// increase no of bugs
         player.sprite = charSprites[level]; // set new char sprite
         populateBugs(); // popuplate bugs
+        if(level<5)
+            $(".level-heading").text(`Level ${level+1}`);
+        else
+            $(".level-heading").text('Thank you soo much!!! You saved us!');
     }
 }
 function populateBugs(){
