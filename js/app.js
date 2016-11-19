@@ -15,7 +15,7 @@ class Enemy {
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
 
-    // row : num of row b/w 1-3 
+    // row : num of rows b/w 1-3 
     // sets the enemy starting position based upon row number
     setStartPosition(){
         this.row = getRandomInt(1,4);
@@ -171,12 +171,7 @@ class Player {
         this.bottom = this.y + 137;
         if(player.row == 5){ // reached to water
             player.reset(); // reset the player position
-            if(level<6){
-                level++; // increase the level after reaching to water
-                numOfBugs++;// increase no of bugs
-                player.sprite = charSprites[level]; // set new char sprite
-                populateBugs(); // popuplate bugs
-            }
+            gotoNextLevel();
         }
     }
 
@@ -208,6 +203,14 @@ let numOfBugs = 6; // number of bugs in the game
 let level = 0; // level of the game
 let allEnemies;
 
+function gotoNextLevel(){
+    if(level<6){
+        level++; // increase the level after reaching to water
+        numOfBugs++;// increase no of bugs
+        player.sprite = charSprites[level]; // set new char sprite
+        populateBugs(); // popuplate bugs
+    }
+}
 function populateBugs(){
     allEnemies=[];
     for(let i=0;i<numOfBugs;i++){
