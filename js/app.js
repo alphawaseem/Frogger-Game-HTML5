@@ -122,6 +122,7 @@ class Player extends Character {
     }
     constructor(){
         super(charSprites[level]);
+        this.activeState = undefined;
         this.xOffset = 100; 
         this.yOffset = 82;
         //start boundary of canvas
@@ -167,23 +168,27 @@ class Player extends Character {
 
     // update the player position
     update(){
-        this.setCorners(this.x+17,this.y+63,this.x+83,this.y+137);
-        if(player.row == 5){ // reached to water
-            player.reset(); // reset the player position
-            gotoNextLevel();
+        if(this.activeState){
+            this.activeState();
+            this.setCorners(this.x+17,this.y+63,this.x+83,this.y+137);
+            if(player.row == 5){ // reached to water
+                player.reset(); // reset the player position
+                gotoNextLevel();
+            }
+            this.activeState = undefined;
         }
     }
 
     //handle the input
     handleInput(keyCode){
         if(keyCode == 'left'){
-            this.moveLeft();
+            this.activeState = this.moveLeft;
         } else if(keyCode == 'right') {
-            this.moveRight();
+            this.activeState = this.moveRight;
         } else if ( keyCode == 'down') {
-            this.moveDown();
+            this.activeState = this.moveDown;
         } else if (keyCode == 'up'){
-            this.moveUp();
+            this.activeState = this.moveUp;
         }
     }
 
