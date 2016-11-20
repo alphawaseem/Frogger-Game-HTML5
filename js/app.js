@@ -1,46 +1,68 @@
 "use strict";
 
- //Returns a random integer between min (included) and max (excluded)
-// Using Math.round() will give you a non-uniform distribution!
-function getRandomInt(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min)) + min;
+ 
+// base class for game characters
+class Character{
+    constructor(sprite){
+        this.sprite = sprite;
+    }
+
+    //set the x y position
+    setCoords(x,y){
+        this.x = x;
+        this.y = y;
+    }
+
+    // corners which are used for collision detection
+    setCorners(left,top,right,bottom){
+        this.left = left;
+        this.top = top;
+        this.right = right;
+        this.bottom = bottom;
+    }
+
+    //render the sprite in its x,y position
+    render() {
+        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    }
+
+    //Returns a random integer between min (included) and max (excluded)
+    // Using Math.round() will give you a non-uniform distribution!
+    getRandomInt(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min)) + min;
+    }
 }
 
-class Enemy {
-    // Variables applied to each of our instances go here,
-    // we've provided one for you to get started
 
-    // The image/sprite for our enemies, this uses
-    // a helper we've provided to easily load images
-
+class Enemy extends Character {
     // row : num of rows b/w 1-3 
     // sets the enemy starting position based upon row number
     setStartPosition(){
-        this.row = getRandomInt(1,4);
-        let x , y ;
-        if(this.row==1){
-            x = -101;
-            y = 60 ;
-        } else if( this.row==2) {
-            x = -101;
-            y = 73*2 ;
-        } else {
-            x =-101;
-            y = 75*3;
+        let x=-101 ;// starting x position is same for all Enemies
+        let y ;
+        //find y position
+        switch(this.getRandomInt(1,4)) {
+            // below numbers are found by trail and error to fit enemy in a desired row
+            case 1 : y = 60 ; 
+        
+            case 2 : y = 73*2 ;
+
+            case 3 : y = 75*3;
         }
-        this.x = x;
-        this.y = y;
-        this.left = this.x + 2;
-        this.right = this.x + 99;
-        this.top = this.y + 79;
-        this.bottom = this.y + 141;
+        this.setCoords(x,y);
+        this.setCorners(
+            this.x + 2 , // left
+            this.y + 79 , // top
+            this.x  + 99, // right
+            this.y + 141, // bottom
+            );
     }
 
     // set the speed of the bugs
     setSpeed(){
-        this.speed = getRandomInt(25,350);
+        this.speed = this.getRandomInt(25,350);
     }
 
     // reset the bug to start position and reset to new speed
@@ -49,7 +71,7 @@ class Enemy {
         this.setStartPosition();
     }
     constructor(){
-        this.sprite = 'images/enemy-bug.png';
+        super('images/enemy-bug.png');
         this.reset();
     }
    
@@ -62,18 +84,26 @@ class Enemy {
             player.setStartPosition();
         }
     }
+
+    //check if the enemy's x position is within canvas
+    withinCanvas(){
+        return this.x < 506;
+    }
     // Update the enemy's position, required method for game
     // Parameter: dt, a time delta between ticks
     update(dt) {
         // You should multiply any movement by the dt parameter
         // which will ensure the game runs at the same speed for
         // all computers.
-        if(this.x < 506){
+
+        //since this object is moving only in horizontal direction
+         //set only its x position, and left and right corners
+        if(this.withinCanvas()){
             this.x = this.x + this.speed * dt;
-            this.left = this.x + 17;
+            this.left = this.x + 17; 
             this.right = this.x + 83;
         }
-        else {
+        else { // must have moved out of canvas so reset its position
             this.reset();
         }
     }
