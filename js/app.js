@@ -45,18 +45,18 @@ class Enemy extends Character {
         //find y position
         switch(this.getRandomInt(1,4)) {
             // below numbers are found by trail and error to fit enemy in a desired row
-            case 1 : y = 60 ; 
+            case 1 : y = 60 ; break;
         
-            case 2 : y = 73*2 ;
+            case 2 : y = 73*2 ; break;
 
-            case 3 : y = 75*3;
+            case 3 : y = 75*3; break;
         }
         this.setCoords(x,y);
         this.setCorners(
             this.x + 2 , // left
             this.y + 79 , // top
             this.x  + 99, // right
-            this.y + 141, // bottom
+            this.y + 141 // bottom
             );
     }
 
@@ -85,10 +85,6 @@ class Enemy extends Character {
         }
     }
 
-    //check if the enemy's x position is within canvas
-    withinCanvas(){
-        return this.x < 506;
-    }
     // Update the enemy's position, required method for game
     // Parameter: dt, a time delta between ticks
     update(dt) {
@@ -98,7 +94,7 @@ class Enemy extends Character {
 
         //since this object is moving only in horizontal direction
          //set only its x position, and left and right corners
-        if(this.withinCanvas()){
+        if(this.x<506){
             this.x = this.x + this.speed * dt;
             this.left = this.x + 17; 
             this.right = this.x + 83;
@@ -106,11 +102,6 @@ class Enemy extends Character {
         else { // must have moved out of canvas so reset its position
             this.reset();
         }
-    }
-
-    // Draw the enemy on the screen, required method for game
-    render() {
-        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     }
     
 }
