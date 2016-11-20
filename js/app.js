@@ -106,34 +106,13 @@ class Enemy extends Character {
     
 }
 
-// 
-const xOffset = 100; 
-const yOffset = 82;
-
-//start boundary of canvas
-const startBoundary = 1;
-//end boundary of canvas
-const endBoundary = 401;
-
-// set the char sprite based on level
-let charSprites = [
-    'images/char-boy.png',
-    'images/char-cat-girl.png',
-    'images/char-horn-girl.png',
-    'images/char-pink-girl.png',
-    'images/char-princess-girl.png'
-]
-class Player {
+class Player extends Character {
     
     //set starting position of player
     setStartPosition(){
         
-        this.y = endBoundary;
-        this.x = startBoundary;
-        this.left = this.x + 17;
-        this.right = this.x + 83;
-        this.top = this.y + 63;
-        this.bottom = this.y + 137;
+        this.setCoords(this.startBoundary,this.endBoundary);
+        this.setCorners(this.x+17,this.y+63,this.x+83,this.y+137);
         this.row = 0;
     }
 
@@ -142,42 +121,44 @@ class Player {
         this.setStartPosition();
     }
     constructor(){
-        this.sprite = charSprites[level];
+        super(charSprites[level]);
+        this.xOffset = 100; 
+        this.yOffset = 82;
+        //start boundary of canvas
+        this.startBoundary = 1;
+        //end boundary of canvas
+        this.endBoundary = 401;
         this.setStartPosition();
     }
 
-    //move player left by xOffset
+    //move player left by this.xOffset
     moveLeft(){
-        if(this.x > startBoundary){
-            this.x = this.x - xOffset ;
-            this.left = this.x + 17;
+        if(this.x > this.startBoundary){
+            this.x = this.x - this.xOffset ;
         }
     }
 
-    //move player right by xOffset
+    //move player right by this.xOffset
     moveRight(){
-        if(this.x < endBoundary){
-            this.x = this.x + xOffset;
-            this.right = this.x + 83;
+        if(this.x < this.endBoundary){
+            this.x = this.x + this.xOffset;
         }
     }
 
-    //move player Down by yOffset
+    //move player Down by this.yOffset
     moveDown(){
-        if(this.y < endBoundary){
-            this.y = this.y + yOffset;
-            this.bottom = this.y+137;
+        if(this.y < this.endBoundary){
+            this.y = this.y + this.yOffset;
             if(this.row>0){
                 this.row--;
             }
         }
     }
 
-    //move player up by yOffset
+    //move player up by this.yOffset
     moveUp(){
-        if(this.y > startBoundary){
-            this.y = this.y - yOffset;
-            this.top = this.y + 63;
+        if(this.y > this.startBoundary){
+            this.y = this.y - this.yOffset;
             if(this.row<=5){
                 this.row++;
             }
@@ -186,19 +167,11 @@ class Player {
 
     // update the player position
     update(){
-        this.left = this.x + 17;
-        this.right = this.x + 83;
-        this.top = this.y + 63;
-        this.bottom = this.y + 137;
+        this.setCorners(this.x+17,this.y+63,this.x+83,this.y+137);
         if(player.row == 5){ // reached to water
             player.reset(); // reset the player position
             gotoNextLevel();
         }
-    }
-
-    //draw the player
-    render(){
-        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     }
 
     //handle the input
@@ -223,6 +196,14 @@ let gameOver = false;
 let numOfBugs = 6; // number of bugs in the game
 let level = 0; // level of the game
 let allEnemies;
+// set the char sprite based on level
+let charSprites = [
+    'images/char-boy.png',
+    'images/char-cat-girl.png',
+    'images/char-horn-girl.png',
+    'images/char-pink-girl.png',
+    'images/char-princess-girl.png'
+]
 
 function gotoNextLevel(){
     if(level<6){
@@ -257,6 +238,5 @@ document.addEventListener('keyup', function(e) {
         39: 'right',
         40: 'down'
     };
-
     player.handleInput(allowedKeys[e.keyCode]);
 });
